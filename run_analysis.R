@@ -23,6 +23,9 @@ colnames(meanStdData) <- features[gsub("V", "", colnames(meanStdData)), ]$V2
 
 meanStdWithMeta <- bind_cols(subjectActivity, meanStdData)
 gathered <- gather(meanStdWithMeta, variable, val, -c(subject, activity))
+activityLabls <- read.table("./activity_labels.txt")
+gathered <- mutate(gathered, activity = activityLabls[activity,]$V2 )
 grouped <- group_by(gathered, subject, activity, variable)
 result <- summarize(grouped, mean(val))
+
 write.table(result, row.name=FALSE, file = "./tidyresult.txt")
