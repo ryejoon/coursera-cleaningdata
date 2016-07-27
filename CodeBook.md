@@ -33,8 +33,6 @@ meanStdData : only mean and standard deviation data from the entire sensor value
 
 meanStdWithMeta : mean and standard deviation data along with subject and activity data
 
-gathered : gather each column from 'meanStdWithMeta' (except subject and activity column) to a new column 'variable'
-
-grouped : 'gathered' data grouped by subject and variable
+grouped : 'meanStdWithMeta' data grouped by subject and variable
 
 result : mean value for sensor values for each subjects's activity's variable
