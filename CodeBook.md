@@ -15,11 +15,10 @@ X_merged : merged sensor values from both test and train data
 subjectActivity : binded from merged subject data and activities data
 
 features : feature labels from "./features.txt"
-meanStdCols <- filter(features, grepl(".*(mean|std).*", V2)) %>% select(V1)
-meanStdData <- select(X_merged, meanStdCols$V1)
-colnames(meanStdData) <- features[gsub("V", "", colnames(meanStdData)), ]$V2
+meanStdCols : column indexes for features containing the string 'mean' and 'std'
+meanStdData : only mean and standard deviation data from the entire sensor values
 
-meanStdWithMeta <- bind_cols(subjectActivity, meanStdData)
-gathered <- gather(meanStdWithMeta, variable, val, -c(subject, activity))
-grouped <- group_by(gathered, subject, activity, variable)
-result <- summarize(grouped, mean(val))
+meanStdWithMeta : mean and standard deviation data along with subject and activity data
+gathered : gather each column from 'meanStdWithMeta' (except subject and activity column) to a new column 'variable'
+grouped : 'gathered' data grouped by subject and variable
+result : mean value for sensor values for each subjects's activity's variable
