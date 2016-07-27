@@ -14,7 +14,8 @@ X_merged <- bind_rows(X_test, X_train)
 
 subjectActivity <- bind_cols(subject_merged, y_merged)
 colnames(subjectActivity) <- c("subject", "activity")
-subjectActivity <- mutate(subjectActivity, activity = activity_label[activity,]$V2)
+activityLabls <- read.table("./activity_labels.txt")
+subjectActivity <- mutate(subjectActivity, activity = activityLabels[activity,]$V2)
 
 features <- read.table("./features.txt")
 meanStdCols <- filter(features, grepl(".*(mean|std).*", V2)) %>% select(V1)
@@ -23,8 +24,6 @@ colnames(meanStdData) <- features[gsub("V", "", colnames(meanStdData)), ]$V2
 
 meanStdWithMeta <- bind_cols(subjectActivity, meanStdData)
 gathered <- gather(meanStdWithMeta, variable, val, -c(subject, activity))
-activityLabls <- read.table("./activity_labels.txt")
-gathered <- mutate(gathered, activity = activityLabls[activity,]$V2 )
 grouped <- group_by(gathered, subject, activity, variable)
 result <- summarize(grouped, mean(val))
 
