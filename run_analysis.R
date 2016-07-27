@@ -14,7 +14,7 @@ X_merged <- bind_rows(X_test, X_train)
 
 subjectActivity <- bind_cols(subject_merged, y_merged)
 colnames(subjectActivity) <- c("subject", "activity")
-activityLabls <- read.table("./activity_labels.txt")
+activityLabels <- read.table("./activity_labels.txt")
 subjectActivity <- mutate(subjectActivity, activity = activityLabels[activity,]$V2)
 
 features <- read.table("./features.txt")
